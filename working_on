@@ -1,0 +1,30 @@
+<body>
+  <ul id="list">
+	</ul>
+  <script type="text/javascript">
+			var newArr = new Array(12);
+			var olfArr = [{'xiong': 1221},{'xiong': 3333}];
+			for(var i = 0; i < olfArr.length; i++){
+				newArr[i] = olfArr[i];
+			}
+			console.log(newArr);
+			for(var j = 0; j < newArr.length; j++){
+				if(!newArr[j]){
+					newArr[j] = '';
+				}
+			}
+			console.log(newArr);
+			var liHtml;
+			for(var k = 0; k < newArr.length; k++){
+				liHtml += '<li>'+newArr[k].xiong+'</li>'
+			}
+			console.log(liHtml);
+			document.getElementById('list').innerHTML = liHtml;
+			var li = document.querySelectorAll('li');
+			for(var n = 0; n < li.length; n++){
+				if(li[n].innerHTML == 'undefined'){
+					li[n].innerHTML = '';
+				}
+			}
+	</script>
+</body>
