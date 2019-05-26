@@ -1,0 +1,55 @@
+//访问数据接口：
+//提供参数  page（页码）  limit（个数）
+//访问方法  get、post
+
+//从实现方式上来说分页基本分为两种方式：
+//1.查询所有数据返回给客户，通过显示指定区间实现分页，这种方法一般是指JS分页
+//2.通过客户发送的请求，构造sql语句，查询表中的一段数据。
+
+getData(1);//获取第一页数据
+
+var goto = cache();//创建一个缓存对象
+
+/*封装一个获取数据的方法，以便重用*/
+function getData(page){
+	myAjax({
+		type:"POST",
+		url: "",
+		data:{page:page,limit:12},
+		success:function(doc){
+			console.log(JSON.parse());
+			var movie = JSON.parse(doc);
+			goto.set(page,movie);
+		}		
+	});//已封装ajax
+}
+
+/*每点击向下翻页按钮，获取渲染不同页码的数据*/
+ var turnDown = document.querySelector('downbtn');
+ var upDown = document.querySelector('upbtn');
+ var clickNum = 0;
+ turnDown.addEventListener('click',function(){
+ 	clickNum++;
+ 	getData();
+ })
+ 
+//缓存数据
+function cache(){
+	var localCache = {};//缓存池
+	return {
+		set: function(page,data){
+			localCache[page] = data;
+		},
+		get: function(){
+			if(page in localCache){
+				console.log('缓存中已存在数据，不需要再向后台请求');
+			}else{
+				getData()//没有数据时请求新数据
+			}
+			
+		}
+	}
+}
+
+
+//渲染数据
